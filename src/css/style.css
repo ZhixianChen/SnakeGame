@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+}
+
+.game-container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+h1 {
+    color: #4a5568;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.score-board {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background: #f7fafc;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+}
+
+.score, .high-score {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #4a5568;
+}
+
+.score span, .high-score span {
+    color: #3182ce;
+}
+
+#gameCanvas {
+    border: 3px solid #4a5568;
+    border-radius: 10px;
+    background: #f0f4f8;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    margin: 0 8px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    background: #cbd5e0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.instructions {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #3182ce;
+}
+
+.instructions p {
+    margin: 8px 0;
+    color: #4a5568;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+    .game-container {
+        margin: 20px;
+        padding: 20px;
+    }
+    
+    #gameCanvas {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .score-board {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .controls button {
+        margin: 5px;
+        padding: 10px 20px;
+    }
+}
