@@ -12,6 +12,8 @@ export class GameState {
         this.gameOver = false;
         this.gamePaused = false;
         this.score = 0;
+        this.updateScore();
+        this.updateHighScore();
     }
     
     endGame() {
@@ -30,11 +32,14 @@ export class GameState {
         this.gamePaused = false;
         this.gameOver = false;
         this.score = 0;
+        this.updateScore();
+        this.updateHighScore();
     }
     
     addScore(points) {
         this.score += points;
         this.updateScore();
+        this.updateHighScore();
     }
     
     updateScore() {

@@ -21,7 +21,8 @@ class SnakeGame {
         this.inputHandler = new InputHandler();
         
         // Game settings
-        this.speed = 150;
+        this.baseSpeed = 150;
+        this.speed = this.baseSpeed;
         this.lastTime = 0;
         this.snakeMoveTimer = 0;
         
@@ -32,6 +33,9 @@ class SnakeGame {
     init() {
         this.gameState.updateHighScore();
         this.setupEventListeners();
+        this.food.generateNew(this.snake, this.mushroom);
+        document.getElementById('pauseBtn').disabled = true;
+        document.getElementById('startBtn').disabled = false;
         this.renderer.draw(this.snake, this.food, this.mushroom, this.gameState);
     }
     
@@ -49,9 +53,12 @@ class SnakeGame {
         if (this.gameState.gameRunning) return;
         
         this.gameState.startGame();
+        this.speed = this.baseSpeed;
+        this.lastTime = 0;
+        this.snakeMoveTimer = 0;
         this.snake.reset();
-        this.food.generateNew(this.snake, this.mushroom);
         this.mushroom.reset();
+        this.food.generateNew(this.snake, this.mushroom);
         
         document.getElementById('startBtn').disabled = true;
         document.getElementById('pauseBtn').disabled = false;
@@ -75,9 +82,12 @@ class SnakeGame {
     
     resetGame() {
         this.gameState.resetGame();
+        this.speed = this.baseSpeed;
+        this.lastTime = 0;
+        this.snakeMoveTimer = 0;
         this.snake.reset();
-        this.food.generateNew(this.snake, this.mushroom);
         this.mushroom.reset();
+        this.food.generateNew(this.snake, this.mushroom);
         
         document.getElementById('startBtn').disabled = false;
         document.getElementById('pauseBtn').disabled = true;
@@ -93,6 +103,8 @@ class SnakeGame {
         const deltaTime = currentTime - this.lastTime;
         this.lastTime = currentTime;
         
+        this.mushroom.setOccupiedPositions(this.snake.getSegments(), this.food.getPosition());
+
         // Update mushroom system every frame for smooth spawning
         this.mushroom.update(deltaTime);
         
@@ -114,11 +126,9 @@ class SnakeGame {
     }
     
     update() {
-        // Update occupied positions for mushroom spawning
-        this.mushroom.setOccupiedPositions(this.snake.getSegments(), this.food.getPosition());
-        
         // Move snake
         const head = this.snake.move();
+        this.mushroom.setOccupiedPositions(this.snake.getSegments(), this.food.getPosition());
         
         // Handle wall collision based on invincibility
         if (this.snake.checkWallCollision()) {
