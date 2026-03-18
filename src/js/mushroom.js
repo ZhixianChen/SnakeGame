@@ -10,6 +10,7 @@ export class Mushroom {
         this.powerUpDuration = 10000; // 10 seconds of invincibility
         this.isPowerUpActive = false;
         this.powerUpTimer = 0;
+        this.occupiedPositions = [];
     }
     
     update(deltaTime) {
@@ -34,26 +35,34 @@ export class Mushroom {
     spawn() {
         // Generate random position that doesn't overlap with snake
         let newX, newY;
+        let safetyCounter = 0;
+        const maxAttempts = this.tileCount * this.tileCount;
         do {
             newX = Math.floor(Math.random() * this.tileCount);
             newY = Math.floor(Math.random() * this.tileCount);
-        } while (this.isPositionOccupied(newX, newY));
+            safetyCounter += 1;
+        } while (this.isPositionOccupied(newX, newY) && safetyCounter < maxAttempts);
         
-        this.x = newX;
-        this.y = newY;
-        this.isActive = true;
+        if (safetyCounter < maxAttempts) {
+            this.x = newX;
+            this.y = newY;
+            this.isActive = true;
+        }
     }
     
     isPositionOccupied(x, y) {
-        // This will be set by the game to check against snake and food positions
-        return false;
+        if (!Array.isArray(this.occupiedPositions)) {
+            return false;
+        }
+        return this.occupiedPositions.some(position => position.x === x && position.y === y);
     }
     
     setOccupiedPositions(snakeSegments, foodPosition) {
-        this.occupiedPositions = [
-            ...snakeSegments.map(seg => ({x: seg.x, y: seg.y})),
-            {x: foodPosition.x, y: foodPosition.y}
-        ];
+        const occupied = snakeSegments.map(seg => ({x: seg.x, y: seg.y}));
+        if (foodPosition) {
+            occupied.push({x: foodPosition.x, y: foodPosition.y});
+        }
+        this.occupiedPositions = occupied;
     }
     
     checkCollision(snakeHead) {
@@ -99,5 +108,6 @@ export class Mushroom {
         this.spawnTimer = 0;
         this.isPowerUpActive = false;
         this.powerUpTimer = 0;
+        this.occupiedPositions = [];
     }
 }

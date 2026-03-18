@@ -8,21 +8,25 @@ export class Food {
     }
     
     generateNew(snake = null, mushroom = null) {
+        const maxAttempts = this.tileCount * this.tileCount;
+        let attempts = 0;
         let newFood;
         do {
             newFood = {
                 x: Math.floor(Math.random() * this.tileCount),
                 y: Math.floor(Math.random() * this.tileCount)
             };
+            attempts++;
         } while (
-            (snake && snake.getSegments().some(segment => 
+            attempts < maxAttempts &&
+            ((snake && snake.getSegments().some(segment =>
                 segment.x === newFood.x && segment.y === newFood.y
             )) ||
-            (mushroom && mushroom.isActive && 
-             mushroom.getPosition().x === newFood.x && 
-             mushroom.getPosition().y === newFood.y)
+            (mushroom && mushroom.isActive &&
+             mushroom.getPosition().x === newFood.x &&
+             mushroom.getPosition().y === newFood.y))
         );
-        
+
         this.x = newFood.x;
         this.y = newFood.y;
     }

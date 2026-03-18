@@ -163,14 +163,18 @@ export class GameRenderer {
         this.ctx.arc(x, y - radius * 0.1, radius * 0.1, 0, 2 * Math.PI);
         this.ctx.fill();
         
-        // Add glow effect
+        // Add glow effect to cap
         this.ctx.shadowColor = '#dc2626';
         this.ctx.shadowBlur = 10;
         this.ctx.shadowOffsetX = 0;
         this.ctx.shadowOffsetY = 0;
-        
+        this.ctx.fillStyle = '#dc2626';
+        this.ctx.beginPath();
+        this.ctx.arc(x, y - radius * 0.3, radius * 0.8, 0, 2 * Math.PI);
+        this.ctx.fill();
+
         // Reset shadow
-        this.ctx.shadowColor = 'transparent';
+        this.ctx.shadowColor = 'rgba(0,0,0,0)';
         this.ctx.shadowBlur = 0;
     }
     
@@ -187,9 +191,9 @@ export class GameRenderer {
         this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
         this.ctx.fillRect(x, y, barWidth, barHeight);
         
-        // Draw progress bar
+        // Draw progress bar (drains as time runs out)
         this.ctx.fillStyle = '#22c55e';
-        this.ctx.fillRect(x, y, (barWidth * progress) / 100, barHeight);
+        this.ctx.fillRect(x, y, (barWidth * (100 - progress)) / 100, barHeight);
         
         // Draw border
         this.ctx.strokeStyle = '#ffffff';

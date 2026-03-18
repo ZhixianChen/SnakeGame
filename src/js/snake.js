@@ -66,10 +66,6 @@ export class Snake {
         );
     }
     
-    setInvincible(invincible) {
-        this.isInvincible = invincible;
-    }
-    
     checkFoodCollision(food) {
         const head = this.segments[0];
         if (head.x === food.x && head.y === food.y) {
