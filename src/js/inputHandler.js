@@ -5,8 +5,12 @@ export class InputHandler {
     
     setupControls(snake, gameState) {
         document.addEventListener('keydown', (e) => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+            }
+
             if (!gameState.gameRunning || gameState.gamePaused) return;
-            
+
             switch(e.key) {
                 case 'ArrowUp':
                 case 'w':

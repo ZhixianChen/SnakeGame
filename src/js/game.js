@@ -76,6 +76,7 @@ class SnakeGame {
             pauseBtn.textContent = 'Resume';
         } else {
             pauseBtn.textContent = 'Pause';
+            this.lastTime = 0;
             this.gameLoop();
         }
     }
@@ -109,9 +110,6 @@ class SnakeGame {
         this.mushroom.update(deltaTime);
         
         // Only move snake at the specified speed
-        if (!this.snakeMoveTimer) {
-            this.snakeMoveTimer = 0;
-        }
         this.snakeMoveTimer += deltaTime;
         
         if (this.snakeMoveTimer >= this.speed) {

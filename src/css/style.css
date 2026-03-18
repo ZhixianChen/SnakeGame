@@ -12,6 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     color: #333;
+    overflow: hidden;
 }
 
 .game-container {
